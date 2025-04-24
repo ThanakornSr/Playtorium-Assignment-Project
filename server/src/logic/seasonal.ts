@@ -5,7 +5,9 @@ export function applySeasonalDiscount(
   every: number,
   discount: number
 ): number {
-  const total = cart.reduce((sum, item) => sum + item.price, 0);
-  const applicableTimes = Math.floor(cart.length / every);
-  return Math.max(0, total - applicableTimes * discount);
+  const total = cart.reduce((sum, item) => sum + item.price * item.amount, 0);
+  const applicableTimes = Math.floor(total / every);
+  const totalDiscount = applicableTimes * discount;
+
+  return Math.max(0, total - totalDiscount);
 }

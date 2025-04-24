@@ -1,20 +1,26 @@
+export type Category = "Clothing" | "Accessories" | "Electronics";
+
+export type CategoryOnTopDiscount = {
+  type: "category";
+  category: Category;
+  value: number;
+};
+
+export type PointOnTopDiscount = {
+  type: "point";
+  value: number;
+};
+
 export type CartItem = {
   name: string;
-  category: string;
+  category: Category;
   price: number;
+  amount: number;
 };
 
 export type CouponDiscount = { type: "fixed" | "percentage"; value: number };
 
-export type OnTopDiscount = {
-  categoryDiscount?: {
-    category: string;
-    percentage: number;
-  };
-  pointsDiscount?: {
-    points: number;
-  };
-};
+export type OnTopDiscount = CategoryOnTopDiscount | PointOnTopDiscount;
 
 export type SeasonalDiscount = { every: number; discount: number };
 

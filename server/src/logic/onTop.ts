@@ -1,30 +1,25 @@
-import { CartItem, OnTopDiscount } from "../types";
+import { CartItem, CategoryOnTopDiscount, PointOnTopDiscount } from "../types";
 
 export function applyOnTopDiscount(
   cart: CartItem[],
-  discount: OnTopDiscount
+  discount: CategoryOnTopDiscount | PointOnTopDiscount
 ): number {
-  const totalBefore = cart.reduce((sum, item) => sum + item.price, 0);
+  const totalBefore = cart.reduce((sum, item) => sum + item.price * item.amount, 0);
 
-  if (discount.pointsDiscount) {
+  if (discount.type === "point") {
     const maxAllowed = totalBefore * 0.2;
-    const discountFromPoints = Math.min(
-      discount.pointsDiscount.points,
-      maxAllowed
-    );
+    const discountFromPoints = Math.min(discount.value, maxAllowed);
     return Math.max(0, totalBefore - discountFromPoints);
   }
 
-  if (discount.categoryDiscount) {
+  if (discount.type === "category") {
     return cart.reduce((sum, item) => {
-      const isMatching = item.category === discount.categoryDiscount!.category;
-      const itemDiscount = isMatching
-        ? item.price * (discount.categoryDiscount!.percentage / 100)
-        : 0;
-      return sum + (item.price - itemDiscount);
+      const match = item.category === discount.category;
+      const itemDiscount = match ? item.price * (discount.value / 100) : 0;
+      const discountedPrice = item.price - itemDiscount;
+      return sum + discountedPrice * item.amount;
     }, 0);
   }
 
-  // No discount applied
   return totalBefore;
 }

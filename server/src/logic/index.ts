@@ -7,40 +7,66 @@ export function applyDiscount(
   cart: CartItem[],
   discounts: DiscountInput
 ): DiscountResult {
-  const totalBefore = cart.reduce((sum, item) => sum + item.price, 0);
-
+  const totalBefore = cart.reduce(
+    (sum, item) => sum + item.price * item.amount,
+    0
+  );
+  let discountedCart = [...cart];
   let totalAfter = totalBefore;
 
-  if (discounts.on_top) {
-    totalAfter = applyOnTopDiscount(
-      cart,
-      discounts.on_top.category,
-      discounts.on_top.value
-    );
-  }
-
-  if (discounts.seasonal) {
-    totalAfter = applySeasonalDiscount(
-      cart,
-      discounts.seasonal.every,
-      discounts.seasonal.discount
-    );
-  }
-
+  // 1️⃣ Coupon
   if (discounts.coupon) {
-    totalAfter = applyCoupon(
-      cart,
+    const couponTotal = applyCoupon(
+      discountedCart,
       discounts.coupon.type,
       discounts.coupon.value
     );
+
+    if (couponTotal < totalAfter) {
+      totalAfter = couponTotal;
+      discountedCart = adjustCartPrices(discountedCart, totalAfter);
+    }
   }
 
-  if (discounts.points) {
-    totalAfter = Math.max(0, totalAfter - discounts.points);
+  // 2️⃣ OnTop
+  if (discounts.on_top) {
+    const onTopTotal = applyOnTopDiscount(discountedCart, discounts.on_top);
+
+    if (onTopTotal < totalAfter) {
+      totalAfter = onTopTotal;
+      discountedCart = adjustCartPrices(discountedCart, totalAfter);
+    }
+  }
+
+  // 3️⃣ Seasonal
+  if (discounts.seasonal) {
+    const seasonalTotal = applySeasonalDiscount(
+      discountedCart,
+      discounts.seasonal.every,
+      discounts.seasonal.discount
+    );
+
+    if (seasonalTotal < totalAfter) {
+      totalAfter = seasonalTotal;
+    }
   }
 
   return {
     totalBeforeDiscount: totalBefore,
     totalAfterDiscount: Math.round(totalAfter),
   };
+}
+
+function adjustCartPrices(cart: CartItem[], newTotal: number): CartItem[] {
+  const currentTotal = cart.reduce(
+    (sum, item) => sum + item.price * item.amount,
+    0
+  );
+  if (currentTotal === 0 || newTotal >= currentTotal) return cart;
+
+  const ratio = newTotal / currentTotal;
+  return cart.map((item) => ({
+    ...item,
+    price: item.price * ratio,
+  }));
 }
