@@ -28,7 +28,7 @@ export function CouponInput({
       <div className="flex items-center justify-between text-lg font-semibold">
         <h2 className="flex items-center gap-2">🎟️ Coupon</h2>
         <button
-          className="cursor-pointer w-8 h-8 flex items-start justify-center text-xl font-bold bg-red-500 text-white rounded-full hover:bg-red-600 transition duration-200"
+          className="cursor-pointer w-8 h-8 flex items-start justify-center text-xl font-bold bg-rose-500 text-white rounded-full hover:bg-rose-600 transition duration-200"
           onClick={handleOpen}
         >
           {opened ? '-' : '+'}
@@ -41,7 +41,7 @@ export function CouponInput({
             aria-label="label for the select"
             value={type}
             onChange={(e) => setType(e.target.value as CouponDiscount['type'])}
-            className="cursor-pointer w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="cursor-pointer w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
           >
             <option value="fixed">Fixed</option>
             <option value="percentage">Percentage</option>
@@ -60,7 +60,7 @@ export function CouponInput({
             }}
             max={type === 'percentage' ? 100 : undefined}
             placeholder={type === 'percentage' ? '% Discount' : 'Enter amount'}
-            className="w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-red-500"
+            className="w-full sm:w-1/2 px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-rose-500"
           />
         </div>
       )}
