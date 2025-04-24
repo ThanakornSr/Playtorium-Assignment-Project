@@ -59,7 +59,6 @@ export function CartForm({
             onChange={(e) => updateItem(i, 'category', e.target.value)}
             className="cursor-pointer flex-1 min-w-[120px] px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
           >
-            <option value="">Category</option>
             <option value="Clothing">Clothing</option>
             <option value="Accessories">Accessories</option>
             <option value="Electronics">Electronics</option>
