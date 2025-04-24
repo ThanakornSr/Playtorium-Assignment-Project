@@ -31,7 +31,7 @@ function HomePage() {
 
   const applyDiscount = async () => {
     try {
-      const res = await axios.post('http://localhost:5000/api/apply-discount', {
+      const res = await axios.post('http://localhost:5050/api/apply-discount', {
         cart: cart,
         discounts: {
           coupon: coupon,
