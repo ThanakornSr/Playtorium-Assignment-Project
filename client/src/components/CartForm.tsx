@@ -13,7 +13,7 @@ export function CartForm({
     toast.success('item added successfully', { position: 'bottom-right' })
     const newItem: CartItem = {
       name: '',
-      category: '',
+      category: 'Accessories',
       price: 0,
       amount: 1,
     }
@@ -82,8 +82,8 @@ export function CartForm({
               onChange={(e) => updateItem(i, 'category', e.target.value)}
               className="px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500 shadow-sm cursor-pointer"
             >
-              <option value="Clothing">Clothing</option>
               <option value="Accessories">Accessories</option>
+              <option value="Clothing">Clothing</option>
               <option value="Electronics">Electronics</option>
             </select>
           </div>

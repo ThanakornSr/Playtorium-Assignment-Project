@@ -1,4 +1,4 @@
-export type Category = 'Clothing' | 'Accessories' | 'Electronics' | ''
+export type Category = 'Clothing' | 'Accessories' | 'Electronics'
 
 export type CategoryOnTopDiscount = {
   type: 'category'

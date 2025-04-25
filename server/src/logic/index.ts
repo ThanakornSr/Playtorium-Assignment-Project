@@ -53,7 +53,7 @@ export function applyDiscount(
 
   return {
     totalBeforeDiscount: totalBefore,
-    totalAfterDiscount: Math.round(totalAfter),
+    totalAfterDiscount: totalAfter,
   };
 }
 
