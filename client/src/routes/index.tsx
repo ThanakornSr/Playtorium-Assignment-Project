@@ -61,7 +61,7 @@ function HomePage() {
     }
   }
   return (
-    <div className="p-4">
+    <div className="p-4 w-full max-w-250">
       <CartForm onChange={setCart} />
 
       <div className="mt-8 bg-white rounded-2xl shadow-md">
