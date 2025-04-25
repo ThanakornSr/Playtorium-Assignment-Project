@@ -31,10 +31,24 @@ router.post(
     }
 
     for (const item of cart) {
+      if (item.name === "") {
+        res.status(400).json({ error: "Product name is required" });
+      }
+      if (item.price <= 0) {
+        res
+          .status(400)
+          .json({ error: "Price must be greater than 0" });
+      }
+      if (item.amount <= 0) {
+        res
+          .status(400)
+          .json({ error: "Amount must be greater than 0" });
+      }
       if (
         typeof item.name !== "string" ||
         typeof item.price !== "number" ||
-        typeof item.category !== "string"
+        typeof item.category !== "string" ||
+        typeof item.amount !== "number"
       ) {
         res.status(400).json({ error: "Invalid cart item format" });
         return;

@@ -14,8 +14,8 @@ export type PointOnTopDiscount = {
 export type CartItem = {
   name: string
   category: Category
-  price: number | undefined
-  amount: number | undefined
+  price: number
+  amount: number
 }
 
 export type CouponDiscount = { type: 'fixed' | 'percentage'; value: number }
